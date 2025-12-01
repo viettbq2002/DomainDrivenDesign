@@ -1,4 +1,4 @@
-﻿namespace Domain.Aggregates;
+﻿namespace Domain.Aggregates.OrderAggregate;
 public class OrderItem
 {
     [Required]

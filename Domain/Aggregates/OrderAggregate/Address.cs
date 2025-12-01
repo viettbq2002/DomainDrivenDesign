@@ -1,4 +1,4 @@
-﻿namespace Domain.Aggregates;
+﻿namespace Domain.Aggregates.OrderAggregate;
 
 public class Address : ValueObject
 {
@@ -31,6 +31,10 @@ public class Address : ValueObject
 
     protected override IEnumerable<object> GetEqualityComponents()
     {
-        throw new NotImplementedException();
+        yield return Street;
+        yield return City;
+        yield return State;
+        yield return Country;
+        yield return ZipCode;
     }
 }

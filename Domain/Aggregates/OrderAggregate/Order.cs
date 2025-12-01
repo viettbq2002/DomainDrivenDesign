@@ -1,7 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-
-namespace Domain.Aggregates;
+﻿namespace Domain.Aggregates.OrderAggregate;
 
 public class Order: BaseEntity , IAggregateRoot , IAuditable
 {
@@ -13,5 +10,9 @@ public class Order: BaseEntity , IAggregateRoot , IAuditable
     public DateTime? LastModifiedDate { get; set; }
     public string? LastModifiedBy { get; set; }
     public DateTime OrderDate { get; set; }
-
+    private readonly List<OrderItem> _orderItems;
+#pragma warning disable CS0169 // Field is never used
+    private bool _isDraft;
+#pragma warning restore CS0169 // Field is never used
+    public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
 }
