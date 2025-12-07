@@ -8,7 +8,17 @@
 
     <ItemGroup>
       <PackageReference Include="Ardalis.SmartEnum" Version="8.2.0" />
-      <PackageReference Include="MediatR" Version="14.0.0-beta-1" />
+      <PackageReference Include="Ardalis.Specification" Version="9.3.1" />
+      <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="9.3.1" />
+      <PackageReference Include="Mediator.Abstractions" Version="3.1.0-preview.14" />
+      <PackageReference Include="Mediator.SourceGenerator" Version="3.1.0-preview.14">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Aggregates\OrderAggregate\Specification\" />
     </ItemGroup>
 
 </Project>
