@@ -1,4 +1,6 @@
-﻿using Domain.ShareKernel;
+﻿using Domain.Aggregates.OrderAggregate;
+using Domain.ShareKernel;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,10 +13,10 @@ public static class AddInfrastructure
         IConfiguration configuration)
     {
         services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>))
-            .AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
-        var connectionString = configuration.GetConnectionString("DevDb");
+            .AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>))
+            .AddScoped<IOrderRepository, OrderRepository>();
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext<OrderingContext>(o => { o.UseSqlServer(connectionString); });
-
         return services;
     }
 }

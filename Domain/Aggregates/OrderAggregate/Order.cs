@@ -3,7 +3,7 @@ using Domain.Exceptions;
 
 namespace Domain.Aggregates.OrderAggregate;
 
-public class Order : BaseAuditableEntity<Guid>, IAggregateRoot
+public class Order : BaseAuditableEntity, IAggregateRoot
 {
     [Required] public Address Address { get; private set; }
     public string Description { get; private set; }
@@ -14,6 +14,11 @@ public class Order : BaseAuditableEntity<Guid>, IAggregateRoot
 #pragma warning restore CS0169 // Field is never used
     public IReadOnlyCollection<OrderItem> OrderItems => _orderItems.AsReadOnly();
     public OrderStatus OrderStatus { get; }
+
+    public Order()
+    {
+    }
+
     public Order(string userId, string userName, Address address, string description, string createdBy,
         DateTime? lastModifiedDate, string? lastModifiedBy, DateTime orderDate)
     {
@@ -35,12 +40,13 @@ public class Order : BaseAuditableEntity<Guid>, IAggregateRoot
         var orderStartedDomainEvent = new OrderStartedDomainEvent(this, userId, userName);
         AddDomainEvent(orderStartedDomainEvent);
     }
-
+    
     private void statusChangeException(OrderStatus desiredStatus)
     {
         throw new OrderingDomainException(
             $"Is not possible change the order status from {OrderStatus} to {desiredStatus}.");
     }
+    
 
     #endregion
 }
