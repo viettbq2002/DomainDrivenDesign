@@ -1,6 +1,29 @@
-﻿namespace Application.Commands;
+﻿using Application.Models;
+using AutoMapper;
+using Domain.Aggregates.OrderAggregate;
+using Domain.Aggregates.OrderAggregate.Events;
+using Domain.ShareKernel;
 
-public class CreateOrderCommandHandlers
+namespace Application.Commands;
+
+public class CreateOrderCommandHandlers(IOrderRepository orderRepository, IMapper mapper)
+    : IRequestHandler<CreateOrderCommand, MinimalApiResponse<int>>
 {
-    
+    private readonly IOrderRepository _orderRepository = orderRepository;
+    private readonly IMapper _mapper = mapper;
+    private readonly IDomainEventDispatcher _domainEventDispatcher;
+    public async Task<MinimalApiResponse<int>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var order = _mapper.Map<Order>(request);
+            var createdOrder = await _orderRepository.AddAsync(order, cancellationToken);
+            return MinimalApiResponse<int>.Ok(createdOrder.Id, "Order created successfully");
+        }
+        catch (Exception e)
+        {
+            return MinimalApiResponse<int>.Fail($"Failed to create order: {e.Message}");
+        }
+
+    }
 }

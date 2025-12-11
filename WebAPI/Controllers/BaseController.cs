@@ -1,4 +1,4 @@
-﻿using Mediator;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -6,9 +6,7 @@ namespace WebAPI.Controllers;
 [ApiController]
 public abstract class BaseController : ControllerBase
 {
-    private ISender _mediator;
+    private IMediator? _mediator;
 
-    // Lazy injection to avoid duplicate injection in child controllers
-    protected ISender Mediator =>
-        _mediator ??= HttpContext.RequestServices.GetRequiredService<ISender>();
+    protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<IMediator>();
 }

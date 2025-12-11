@@ -1,9 +1,9 @@
 ﻿using Application.DTOs;
-using Mediator;
+using Application.Models;
 
 namespace Application.Commands;
 
-public class CreateOrderCommand : IRequest<bool>
+public class CreateOrderCommand : IRequest<MinimalApiResponse<int>>
 {
     private readonly List<OrderItemDto> _orderItems;
     public string UserId { get; private set; }

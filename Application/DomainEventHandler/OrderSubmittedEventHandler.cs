@@ -1,5 +1,4 @@
 ﻿using Domain.Aggregates.OrderAggregate.Events;
-using Mediator;
 using Microsoft.Extensions.Logging;
 
 namespace Application.DomainEventHandler;
@@ -7,7 +6,7 @@ namespace Application.DomainEventHandler;
 public class OrderSubmittedEventHandler(ILogger<OrderSubmittedEventHandler> logger)
     : INotificationHandler<OrderStartedDomainEvent>
 {
-    public ValueTask Handle(OrderStartedDomainEvent notification, CancellationToken cancellationToken)
+    public Task Handle(OrderStartedDomainEvent notification, CancellationToken cancellationToken)
     {
         var order = notification.Order;
         var username = notification.UserName;
@@ -18,7 +17,6 @@ public class OrderSubmittedEventHandler(ILogger<OrderSubmittedEventHandler> logg
             order.CreatedDate,
             username
         );
-        return ValueTask.CompletedTask;
-        
+        return Task.CompletedTask;
     }
 }

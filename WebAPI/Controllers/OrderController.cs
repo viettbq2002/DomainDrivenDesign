@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
 
         // POST api/<OrderController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public static void Post([FromBody] string value)
         {
         }
 
