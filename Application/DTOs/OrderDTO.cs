@@ -4,9 +4,9 @@ public record OrderItemDto
 {
     public string ProductName { get; set; } = null!;
     public decimal UnitPrice { get; set; }
-    public decimal Discount { get; private set; }
-    public int Units { get; private set; }
-    public int ProductId { get; private set; }
+    public decimal Discount { get;  set; }
+    public int Units { get;  set; }
+    public int ProductId { get;  set; }
 }
 
 public record AddressDto
@@ -14,7 +14,7 @@ public record AddressDto
     public string? Street { get; set; }
     public string? City { get; set; }
     public string? State { get; set; }
-    public string? PostalCode { get; set; }
+    public string? ZipCode { get; set; }
     public string? Country { get; set; }
 }
 public class OrderDto

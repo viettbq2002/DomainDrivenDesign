@@ -1,24 +1,27 @@
 ﻿using Application.DTOs;
+using AutoMapper;
 using Domain.Aggregates.OrderAggregate;
+using Domain.Aggregates.OrderAggregate.Specification;
 
 namespace Application.Queries;
 
-public class OrderQueries(IOrderRepository orderRepository) : IOrderQueries
+public class OrderQueries(IOrderRepository orderRepository, IMapper mapper) : IOrderQueries
 {
     private readonly IOrderRepository _orderRepository = orderRepository;
-
-    public Task<OrderDto> GetOrderAsync(int id)
+    private readonly IMapper _mapper = mapper;
+    public async Task<OrderDto> GetOrderAsync(int id)
     {
-        throw new NotImplementedException();
+        var spec = new OrderByIdSpec(id);
+        var order = await _orderRepository.FirstOrDefaultAsync(spec);
+        var orderDto = _mapper.Map<Order, OrderDto>(order);
+        return orderDto;
+        
     }
 
-    public Task<IEnumerable<OrderDto>> GetOrdersFromUserAsync(string userId)
+    public async Task<IEnumerable<OrderDto>> GetAllOrdersAsync()
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<IEnumerable<OrderDto>> GetAllOrdersAsync()
-    {
-        throw new NotImplementedException();
+        var orders = await _orderRepository.ListAsync(new AllOrderSpec());
+        var orderDto = _mapper.Map<List<Order>, List<OrderDto>>(orders);
+        return orderDto;
     }
 }

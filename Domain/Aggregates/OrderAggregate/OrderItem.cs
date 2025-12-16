@@ -28,4 +28,12 @@ public class OrderItem : BaseAuditableEntity
         Discount = discount;
         Units = units;
     }
+    public void AddUnits(int units)
+    {
+        if (units < 0)
+        {
+            throw new OrderingDomainException("Invalid units");
+        }
+        Units += units;
+    }
 }
